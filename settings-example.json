@@ -29,17 +29,24 @@
         "block": []
     },
     "database": {
-        "type": {
-            "mysql": {
-                "enabled": "false"
-            },
-            "mongo": {
-                "enabled": "false",
-                "url": "",
-                "dbname": "dashactyl"
-            }
+        "mysql": {
+          "enabled": false
+        },
+        "mongodb": {
+          "enabled": true,
+          "url": "",
+          "dbname": ""
+        },
+        "sqlite": {
+          "enabled": false
+        },
+        "mariadb": {
+          "enabled": false
+        },
+        "json": {
+          "enabled": false
         }
-    },
+      },
     "pterodactyl": {
         "domain": "",
         "apikey": ""
