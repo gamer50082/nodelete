@@ -4,7 +4,7 @@ const settings = require("../settings.json");
 const CLIENT_ID = settings.discord.client_id
 const CLIENT_SECRET = settings.discord.client_secret
 
-module.exports.run = async (db) => {
+module.exports.run = async (userdb) => {
   router.get("/login", async (req, res) => {
     res.redirect("https://discord.com/api/oauth2/authorize?client_id=886274617994535013&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&response_type=code&scope=identify%20email")
   });
@@ -15,8 +15,6 @@ module.exports.run = async (db) => {
   });
 
   router.get("/callback", async (req, res) => {
-    console.log(db)
-    const users = db.collection('users');
     if (!req.query.code) res.send("No code was provided!")
     const code = req.query.code;
     let json = await fetch(
@@ -85,7 +83,7 @@ module.exports.run = async (db) => {
 
         if (settings.ip.block.includes(ip)) return res.send("ERROR IP BLOCKED")
 
-        const userInDB = await users.findOne({ userid: userinfo.id })
+        const userInDB = await userdb.get(userinfo.id)
 
         if (userInDB === null) {
           let addedPanelUser_raw = await fetch(
