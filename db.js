@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const mysql = require('mysql2');
+const settings = require("./settings.json");
 
 const pool = mysql.createPool({
   host: settings.database.host,
@@ -106,19 +107,19 @@ module.exports = {
     let generated_password = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
     let account = await fetch(
-      `${process.env.pterodactyl.domain}/api/application/users`,
+      `${settings.pterodactyl.domain}/api/application/users`,
       {
         method: "post",
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.pterodactyl.key}`
+          Authorization: `Bearer ${settings.pterodactyl.apikey}`
         },
         body: JSON.stringify({
           username: username,
           email: email,
           first_name: first_name,
           last_name: last_name,
-          password: process.env.pterodactyl.generate_password_on_sign_up ? generated_password : undefined
+          password: settings.pterodactyl.generate_password_on_sign_up ? generated_password : undefined
         })
       }
     ); 

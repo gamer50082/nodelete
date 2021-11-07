@@ -50,8 +50,6 @@ app.use(session({
   })
 }));
 
-const userdb = new Keyv('sqlite://userdb.sqlite');
-
 app.set('view engine', 'ejs');
 
 app.set('views', path.join(__dirname, '/pages'));
@@ -74,7 +72,7 @@ for (const file of routerFiles) {
   const route = require(`./router/${file}`)
   let fileName = file.split(".")
   app.use("/", route.router);
-  route.run(userdb)
+  route.run(db)
   console.log(chalk.blue(`[ROUTER] - ${fileName[0]}.${fileName[1]} has loaded.`))
 }
 
