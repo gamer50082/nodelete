@@ -1,6 +1,6 @@
 {
   "name": "dashactyl",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JamieGrimwood/dashactyl.git"
+    "url": "git+https://github.com/Dashactyl-Development/Dashactyl.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JamieGrimwood/dashactyl/issues"
+    "url": "https://github.com/Dashactyl-Development/Dashactyl/issues"
   },
-  "homepage": "https://github.com/JamieGrimwood/dashactyl#readme",
+  "homepage": "https://github.com/Dashactyl-Development/Dashactyl#readme",
   "dependencies": {
     "@keyv/sqlite": "^2.0.3",
     "autoprefixer": "^10.3.4",

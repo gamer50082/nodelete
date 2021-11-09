@@ -139,12 +139,12 @@ module.exports = {
     } else { // Find account.
 
       let accountlistjson = await fetch(
-        `${process.env.pterodactyl.domain}/api/application/users?include=servers&filter[email]=${encodeURIComponent(email)}`,
+        `${settings.pterodactyl.domain}/api/application/users?include=servers&filter[email]=${encodeURIComponent(email)}`,
         {
           method: "get",
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.pterodactyl.key}`
+            Authorization: `Bearer ${settings.pterodactyl.apikey}`
           }
         }
       );
