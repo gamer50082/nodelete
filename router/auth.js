@@ -15,7 +15,7 @@ module.exports.run = async (userdb) => {
   });
 
   router.get("/callback", async (req, res) => {
-    if (!req.query.code) res.send("No code was provided!")
+    if (!req.query.code) return res.send("No code was provided!")
     const code = req.query.code;
     let json = await fetch(
       'https://discord.com/api/oauth2/token',
@@ -62,8 +62,8 @@ module.exports.run = async (userdb) => {
   
       let guilds = await guildinfo_raw.json();
       if (!Array.isArray(guilds)) {
-        res.sendStatus(500)
         console.log("broki")
+        return res.sendStatus(500)
       }
 
       userinfo.access_token = codeinfo.access_token;
@@ -109,14 +109,12 @@ module.exports.run = async (userdb) => {
 
         if (settings.ip.block.includes(ip)) return res.send("ERROR IP BLOCKED")
 
-        const userInDB = await process.db.fetchAccountDiscordID(userinfo.id);
+        let dbinfo = await process.db.fetchAccountDiscordID(userinfo.id);
 
-        if (!userInDB) {
+        if (!dbinfo) {
           panelinfo = await process.db.createOrFindAccount(userinfo.id, userinfo.email, userinfo.username, `#${userinfo.discriminator}`);
 
           if (!panelinfo) return res.redirect("/")
-
-          panel_id = panelinfo.id;
 
           if (panelinfo.password) generated_password = panelinfo.password;
           
@@ -132,11 +130,9 @@ module.exports.run = async (userdb) => {
           };
 
           await process.db.checkJ4R(userinfo.id, guilds);
-
-          console.log('Added a user to the database: ' + addedUser);
         }
 
-        const panel_id = userInDB.pterodactyl_id;
+        const panel_id = dbinfo.pterodactyl_id;
 
         let panelinfo_raw = await fetch(
           `${settings.pterodactyl.domain}/api/application/users/${panel_id}?include=servers`,
